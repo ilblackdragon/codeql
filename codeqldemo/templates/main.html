@@ -2,12 +2,16 @@
 
 {% block content %}
 
-<center><table><tr><td align=left>
-    <br><br><br>
-    <b>http://github.com</b>/<a href=/>tensorflow</a>/<a href=/>tensorflow</a><br><br>
+<center><table width="70%"><tr><td align=left>
+    <h3><b>http://github.com</b>/<a href=/>tensorflow</a>/<a href=/>tensorflow</a></h3>
     <form action='/github/tensorflow/tensorflow/search'>
-        Search: <input name=q> <input type=Submit value='Go'>
-    </form>
+        <div class="input-group input-group-lg">
+            <input name=q value="" class="form-control" placeholder="query">
+            <span class="input-group-btn">
+                <input class="btn btn-primary" type=Submit value="Search">
+            </span>
+        </div>
+   </form>
 </td></tr></table></center>
 
 {% end %}

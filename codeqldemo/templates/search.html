@@ -2,10 +2,19 @@
 
 {% block content %}
 
-<center><table width=70%><tr><td align=left>
-    <b>http://github.com</b>/<a href=/>tensorflow</a>/<a href=/>tensorflow</a> <form action='/github/tensorflow/tensorflow/search'>
-        &nbsp; &nbsp; &nbsp; &nbsp; 
-        Search: <input name=q value="{{ search_term }}"> <input type=Submit value='Go'><br></form>
+<center>
+  <table width=70%><tr><td align=left>
+    <h3><b>http://github.com</b>/<a href=/>tensorflow</a>/<a href=/>tensorflow</a></h3>
+    <form action='/github/tensorflow/tensorflow/search'>
+        <div class="input-group input-group-lg">
+            <input name=q value="{{ search_term }}" class="form-control" placeholder="query">
+            <span class="input-group-btn">
+                <input class="btn btn-primary" type=Submit value="Search">
+            </span>
+        </div>
+   </form>
+
+
         {% if search_term.lower() == "LayerNormLSTMCell".lower() %}
         <br>No results for "{{ search_term }}"<br>Searching for "Layer Norm Lstm Cell" instead, but may be you meant <a href=/github/tensorflow/tensorflow/search?q=LayerNormBasicLSTMCell><b>LayerNormBasicLSTMCell</b></a>?<br><br>
         {% end %}
