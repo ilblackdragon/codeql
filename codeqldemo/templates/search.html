@@ -19,7 +19,7 @@
         <br>No results for "{{ search_term }}"<br>Searching for "Layer Norm Lstm Cell" instead, but may be you meant <a href=/github/tensorflow/tensorflow/search?q=LayerNormBasicLSTMCell><b>LayerNormBasicLSTMCell</b></a>?<br><br>
         {% end %}
 
-        {% if search_term == "LayerNormBasicLSTMCell" %}
+        {% if search_term.lower() == "LayerNormBasicLSTMCell".lower() %}
         <br><b>class</b> <big style='color: darkred'>LayerNormBasicLSTMCell</big><br>
         <ul>
         <li><a href='#definition'>Definition</a>
@@ -365,7 +365,67 @@ specific set of inputs.</p>
   </div>
 </span>
 </td></tr></table>
-        {% else %}
+   
+
+{% elif search_term == "zero out random elements of tensor" %}
+            
+    <b>tensorflow/python/ops/nn_ops.py</b>
+    <pre>
+<code id=dropout class="python">def dropout(x, keep_prob, noise_shape=None, seed=None, name=None):  
+  """Computes dropout.
+  With probability `keep_prob`, outputs the input element scaled up by
+  `1 / keep_prob`, otherwise outputs `0`.  The scaling is so that the expected
+  sum is unchanged.
+  By default, each element is kept or dropped independently.  If `noise_shape`
+  is specified, it must be
+  [broadcastable](http://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
+  to the shape of `x`, and only dimensions with `noise_shape[i] == shape(x)[i]`
+  will make independent decisions.  For example, if `shape(x) = [k, l, m, n]`
+  and `noise_shape = [k, 1, 1, n]`, each batch and channel component will be
+  kept independently and each row and column will be kept or not kept together.
+  Args:
+    x: A tensor.
+    keep_prob: A scalar `Tensor` with the same type as x. The probability
+      that each element is kept.
+    noise_shape: A 1-D `Tensor` of type `int32`, representing the
+      shape for randomly generated keep/drop flags.
+    seed: A Python integer. Used to create random seeds. See
+      @{tf.set_random_seed}
+      for behavior.
+    name: A name for this operation (optional).
+  Returns:
+    A Tensor of the same shape of `x`.
+  Raises:
+    ValueError: If `keep_prob` is not in `(0, 1]`.
+  """
+  with ops.name_scope(name, "dropout", [x]) as name:
+    x = ops.convert_to_tensor(x, name="x")
+    if isinstance(keep_prob, numbers.Real) and not 0 < keep_prob <= 1:
+      raise ValueError("keep_prob must be a scalar tensor or a float in the "
+                       "range (0, 1], got %g" % keep_prob)
+    keep_prob = ops.convert_to_tensor(keep_prob,
+                                      dtype=x.dtype,
+                                      name="keep_prob")
+    keep_prob.get_shape().assert_is_compatible_with(tensor_shape.scalar())
+
+    # Do nothing if we know keep_prob == 1
+    if tensor_util.constant_value(keep_prob) == 1:
+      return x
+
+    noise_shape = noise_shape if noise_shape is not None else array_ops.shape(x)
+    # uniform [keep_prob, 1.0 + keep_prob)
+    random_tensor = keep_prob
+    <span style='background-color: #FFFFd0'>random_tensor += random_ops.random_uniform(noise_shape,</span>
+                                               <span style='background-color: #FFFFd0'>seed=seed,</span>
+                                               <span style='background-color: #FFFFd0'>dtype=x.dtype)</span>
+    # 0. if [keep_prob, 1.0) and 1. if [1.0, 1.0 + keep_prob)
+    <span style='background-color: #FFFFd0'>binary_tensor = math_ops.floor(random_tensor)</span>
+    <span style='background-color: #FFFFd0'>ret = math_ops.div(x, keep_prob) * binary_tensor</span>
+    ret.set_shape(x.get_shape())
+    return ret</code></pre>
+
+
+{% else %}
         <b>tensorflow/contrib/rnn/python/ops/rnn_cell.py</b>
         <pre><code id=definition class="python">    res_outputs = nest.map_structure(self._highway, inputs, outputs)
     return (res_outputs, new_state)
@@ -442,6 +502,7 @@ hljs.lineNumbersBlock($('#usage2').get(0), 1009);
 hljs.lineNumbersBlock($('#other1').get(0), 86);
 hljs.lineNumbersBlock($('#layernorm').get(0), 1488);
 hljs.lineNumbersBlock($('#lstm').get(0), 43);
+hljs.lineNumbersBlock($('#dropout').get(0), 1862);
 setTimeout(function() {
 $('#lol').text('# Dimension 1 accounts for the in value and the (in, forget, out) gates.');
 }, 0);

@@ -75,13 +75,13 @@
 
             for (var i = 0; i < lines.length; i++) {
                 html += ('<tr><td class="{0}"><div class="{1} {2}" {3}="{5}"></div></td>' +
-                         '<td class="{4}"><div class="{1}">{6}</div></td></tr>').format(
+                         '<td class="{4}"><div class="{1}">{6}\n</div></td></tr>').format(
                              NUMBERS_BLOCK_NAME,
                              LINE_NAME,
                              NUMBER_LINE_NAME,
                              DATA_ATTR_NAME,
                              CODE_BLOCK_NAME,
-                             i + st,
+                             i + st + " ",
                              lines[i].length > 0 ? lines[i] : ' ');
             }
 
