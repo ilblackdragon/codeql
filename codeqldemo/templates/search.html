@@ -7,7 +7,7 @@
     <h3><b>http://github.com</b>/<a href=/>tensorflow</a>/<a href=/>tensorflow</a></h3>
     <form action='/github/tensorflow/tensorflow/search'>
         <div class="input-group input-group-lg">
-            <input name=q value="{{ search_term }}" class="form-control" placeholder="query">
+            <input name=q value="{{ search_term }}" class="form-control" placeholder="query" autocomplete="off">
             <span class="input-group-btn">
                 <input class="btn btn-primary" type=Submit value="Search">
             </span>
@@ -16,7 +16,7 @@
 
 
         {% if search_term.lower() == "LayerNormLSTMCell".lower() %}
-        <br>No results for "{{ search_term }}"<br>Searching for "Layer Norm Lstm Cell" instead, but may be you meant <a href=/github/tensorflow/tensorflow/search?q=LayerNormBasicLSTMCell><b>LayerNormBasicLSTMCell</b></a>?<br><br>
+        <br>No results for "{{ search_term }}"<br>Searching for "layer norm lstm cell" instead, but may be you meant <a href=/github/tensorflow/tensorflow/search?q=LayerNormBasicLSTMCell><b>LayerNormBasicLSTMCell</b></a>?<br><br>
         {% end %}
 
         {% if search_term.lower() == "LayerNormBasicLSTMCell".lower() %}
@@ -368,8 +368,7 @@ specific set of inputs.</p>
    
 
 {% elif search_term == "zero out random elements of tensor" %}
-            
-    <b>tensorflow/python/ops/nn_ops.py</b>
+    <br><b>tensorflow/python/ops/nn_ops.py</b>
     <pre>
 <code id=dropout class="python">def dropout(x, keep_prob, noise_shape=None, seed=None, name=None):  
   """Computes dropout.
@@ -489,6 +488,29 @@ def <span style='background-color: #FFFFd0'>LSTMCell</span>(weights, m_prev, c_p
   Args:
     weights: Weight matrix with shape LSTMCellWeightsShape.
         </code></pre>
+
+        <br><b>tensorflow/contrib/rnn/python/kernel_tests/rnn_cell_test.py</b>
+        <pre><code id=usage1 class="python">        c1 = array_ops.zeros([1, 2])
+        h1 = array_ops.zeros([1, 2])
+        state1 = rnn_cell.LSTMStateTuple(c1, h1)
+        state = (state0, state1)
+        single_cell = lambda: contrib_rnn_cell.<span style='background-color: #FFFFd0'>LayerNorm</span>Basic<span style='background-color: #FFFFd0'>LSTMCell</span>(2)
+        cell = rnn_cell.MultiRNNCell([single_cell() for _ in range(2)])
+        g, out_m = cell(x, state)
+        sess.run([variables.global_variables_initializer()])
+        res = sess.run([g, out_m], {
+        </code></pre>
+        <pre><code id=usage2 class="python">            [1, 3])  # Test BasicLSTMCell with input_size != num_units.
+        c = array_ops.zeros([1, 2])
+        h = array_ops.zeros([1, 2])
+        state = rnn_cell.LSTMStateTuple(c, h)
+        cell = contrib_rnn_cell.<span style='background-color: #FFFFd0'>LayerNorm</span>Basic<span style='background-color: #FFFFd0'>LSTMCell</span>(2)
+        g, out_m = cell(x, state)
+        sess.run([variables.global_variables_initializer()])
+        res = sess.run([g, out_m], {
+            x.name: np.array([[1., 1., 1.]]),
+        </code></pre>
+       
         {% end %}
 </td></tr></table>
 
