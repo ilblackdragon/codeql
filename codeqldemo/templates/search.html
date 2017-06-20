@@ -365,6 +365,70 @@ specific set of inputs.</p>
   </div>
 </span>
 </td></tr></table>
+        {% else %}
+        <b>tensorflow/contrib/rnn/python/ops/rnn_cell.py</b>
+        <pre><code id=definition class="python">    res_outputs = nest.map_structure(self._highway, inputs, outputs)
+    return (res_outputs, new_state)
+
+
+class <span style='cursor:pointer' onclick='openBasic();'><span style='background-color: #FFFFd0'>LayerNorm</span>Basic<span style='background-color: #FFFFd0'>LSTMCell</span></span>(rnn_cell_impl.RNNCell):
+  """LSTM unit with layer normalization and recurrent dropout.
+
+  This class adds layer normalization and recurrent dropout to a
+  basic LSTM unit. Layer normalization implementation is based on:
+
+    https://arxiv.org/abs/1607.06450.
+
+  "Layer Normalization"
+  Jimmy Lei Ba, Jamie Ryan Kiros, Geoffrey E. Hinton
+
+  and is applied before the internal nonlinearities.
+  Recurrent dropout is base on:
+
+    https://arxiv.org/abs/1603.05118
+
+  "Recurrent Dropout without Memory Loss"
+  Stanislau Semeniuta, Aliaksei Severyn, Erhardt Barth.
+  """
+
+  def __init__(self, num_units, forget_bias=1.0,
+               input_size=None, activation=math_ops.tanh,
+               layer_norm=True, norm_gain=1.0, norm_shift=0.0,
+               dropout_keep_prob=1.0, dropout_prob_seed=None,
+               reuse=None):
+        </code></pre>
+        <br><b>tensorflow/contrib/layers/python/layers/layers.py</b><br>
+        <small><i>Missing: <s>Lstm</s>, <s>Cell</s></i></small>
+        <pre><code id=layernorm class="python">        outputs_collections, sc.original_name_scope, outputs)
+
+
+@add_arg_scope
+<b>def</b> <b style='color:#880000;background-color:#FFFFD0'>layer_norm</b>(inputs,
+               center=True,
+               scale=True,
+               activation_fn=None,
+               reuse=None,
+               variables_collections=None,
+               outputs_collections=None,
+               trainable=True,
+               begin_norm_axis=1,
+               begin_params_axis=-1,
+               scope=None):
+  """Adds a Layer Normalization layer.
+  Based on the paper:
+
+        </code></pre>
+        <br><b>tensorflow/compiler/tests/lstm.py</b><br>
+        <small><i>Missing: <s>Layer</s>, <s>Norm</s></i></small>
+        <pre><code id=lstm class="python">  <span id=lol></span>
+  return [num_inputs + num_nodes, 4 * num_nodes]
+
+
+def <span style='background-color: #FFFFd0'>LSTMCell</span>(weights, m_prev, c_prev, x, pad):
+  """Unrolls a single LSTM cell with clipped activations forward by one step.
+  Args:
+    weights: Weight matrix with shape LSTMCellWeightsShape.
+        </code></pre>
         {% end %}
 </td></tr></table>
 
@@ -376,6 +440,15 @@ hljs.lineNumbersBlock($('#definition').get(0), 1233);
 hljs.lineNumbersBlock($('#usage1').get(0), 972);
 hljs.lineNumbersBlock($('#usage2').get(0), 1009);
 hljs.lineNumbersBlock($('#other1').get(0), 86);
+hljs.lineNumbersBlock($('#layernorm').get(0), 1488);
+hljs.lineNumbersBlock($('#lstm').get(0), 43);
+setTimeout(function() {
+$('#lol').text('# Dimension 1 accounts for the in value and the (in, forget, out) gates.');
+}, 0);
+
+function openBasic() {
+     location.href="/github/tensorflow/tensorflow/search?q=LayerNormBasicLSTMCell";
+}
 </script>
 {% end %}
 
